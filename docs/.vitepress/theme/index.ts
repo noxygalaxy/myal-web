@@ -34,6 +34,7 @@ export default {
       cleanupHomeGrid = null
 
       if (!isHomeRoute()) return
+      if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return
 
       const canvas = document.createElement('canvas')
       canvas.className = 'myal-home-grid-canvas'

@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitepress'
 import { meta, nav, sidebar, socialLinks } from './constants'
 
@@ -40,6 +41,16 @@ export default defineConfig({
     }
   },
   vite: {
+    resolve: {
+      alias: [
+        {
+          find: /^.*VPNav\.vue$/,
+          replacement: fileURLToPath(
+            new URL('./theme/components/VPNav.vue', import.meta.url)
+          )
+        }
+      ]
+    },
     server: {
       host: true
     }
