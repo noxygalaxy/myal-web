@@ -1,11 +1,16 @@
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 const root = resolve(process.cwd())
-const readmePath = resolve(root, 'README.md')
+const readmePath =
+  process.env.UPSTREAM_README_PATH
+    ? resolve(root, process.env.UPSTREAM_README_PATH)
+    : resolve(root, 'data/upstream-README.md')
+const fallbackReadmePath = resolve(root, 'README.md')
 const docsDir = resolve(root, 'docs')
 
-const readme = readFileSync(readmePath, 'utf8').replace(/\r\n/g, '\n')
+const sourceReadmePath = existsSync(readmePath) ? readmePath : fallbackReadmePath
+const readme = readFileSync(sourceReadmePath, 'utf8').replace(/\r\n/g, '\n')
 
 const tocStart = readme.indexOf('## 📜 Table Of Contents')
 const disclaimerStart = readme.indexOf('### 📋 Disclaimer')

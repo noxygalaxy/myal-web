@@ -3,7 +3,8 @@ title: Material You App List
 layout: home
 hero:
   name: Material You Apps List
-  tagline: Curated apps that follow Material Design 3 ✨
+  tagline: Curated apps that follow Material Design 3 / Material You
+  image:
     src: /home-hero.svg
     alt: Material You
   actions:
