@@ -19,6 +19,26 @@ VitePress website for the Material You App List.
 - `npm run docs:build` — build static site
 - `npm run docs:sync` — fetch upstream + regenerate docs + changelog
 
+## Deploy on Vercel
+
+This project is configured for Vercel via `vercel.json`:
+
+- Build Command: `npm run docs:build`
+- Output Directory: `docs/.vitepress/dist`
+- Install Command: `npm ci`
+
+### Dashboard setup
+
+- Import this GitHub repository into Vercel.
+- Vercel will auto-detect `vercel.json` settings.
+- Deploy.
+
+### CLI (optional)
+
+- `npm i -g vercel`
+- `vercel`
+- `vercel --prod`
+
 ## Data source
 
 Upstream README content used for generation is stored in:
