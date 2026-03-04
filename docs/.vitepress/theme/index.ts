@@ -1,9 +1,14 @@
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import { inject } from '@vercel/analytics'
-import twemoji from 'twemoji'
+import { library, dom } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { emojiToFaMap } from '../emoji-map'
 import Layout from './Layout.vue'
 import './style.css'
+
+library.add(fas, fab)
 
 export default {
   extends: DefaultTheme,
@@ -166,10 +171,58 @@ export default {
       }
     }
 
-    const applyTwemoji = () => {
-      twemoji.parse(document.body, {
-        folder: 'svg',
-        ext: '.svg'
+    const applyFontAwesome = () => {
+      dom.watch()
+    }
+
+    const replaceEmojiInDOM = () => {
+      const containers = document.querySelectorAll(
+        '.VPNav, .VPSidebar, .VPNavScreen, .VPNavBarMenu, .VPNavScreenMenu, .VPDocAsideOutline, .VPHero, .vp-doc h1, .vp-doc h2, .vp-doc h3, .vp-doc h4'
+      )
+      if (!containers.length) return
+
+      containers.forEach((root) => {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT)
+        const textNodes: Text[] = []
+        while (walker.nextNode()) {
+          const node = walker.currentNode as Text
+          for (const [emoji] of emojiToFaMap) {
+            if (node.data.includes(emoji)) {
+              textNodes.push(node)
+              break
+            }
+          }
+        }
+
+        for (const node of textNodes) {
+          let html = node.data
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+
+          for (const [emoji, faClass] of emojiToFaMap) {
+            html = html.replaceAll(
+              emoji,
+              `<i class="${faClass} myal-fa-emoji"></i>`
+            )
+          }
+
+          const wrapper = document.createElement('span')
+          wrapper.innerHTML = html
+          node.parentNode?.replaceChild(wrapper, node)
+        }
+      })
+    }
+
+    const applyHeroSparkles = () => {
+      const tagline = document.querySelector('.VPHero .tagline')
+      if (!tagline) return
+      const faIcons = tagline.querySelectorAll('.myal-fa-emoji')
+      faIcons.forEach((icon) => {
+        const sparkles = document.createElement('span')
+        sparkles.className = 'myal-hero-sparkles'
+        sparkles.setAttribute('aria-hidden', 'true')
+        icon.parentNode?.replaceChild(sparkles, icon)
       })
     }
 
@@ -289,17 +342,25 @@ export default {
     }
 
     requestAnimationFrame(() => {
-      applyTwemoji()
+      applyFontAwesome()
+      replaceEmojiInDOM()
+      applyHeroSparkles()
       applyTocToggle()
       syncHomePageClass()
       setupHomeGrid()
+      setTimeout(() => { replaceEmojiInDOM(); applyHeroSparkles() }, 150)
+      setTimeout(() => { replaceEmojiInDOM(); applyHeroSparkles() }, 500)
     })
     router.onAfterRouteChanged = () => {
       requestAnimationFrame(() => {
-        applyTwemoji()
+        applyFontAwesome()
+        replaceEmojiInDOM()
+        applyHeroSparkles()
         applyTocToggle()
         syncHomePageClass()
         setupHomeGrid()
+        setTimeout(() => { replaceEmojiInDOM(); applyHeroSparkles() }, 150)
+        setTimeout(() => { replaceEmojiInDOM(); applyHeroSparkles() }, 500)
       })
     }
   }

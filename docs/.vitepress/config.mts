@@ -1,6 +1,7 @@
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitepress'
 import { meta, nav, sidebar, socialLinks } from './constants'
+import { emojiToFontAwesomePlugin } from './emoji-fontawesome'
 
 const repositoryName = process.env.GITHUB_REPOSITORY?.split('/')[1]
 const pagesBase = process.env.GITHUB_ACTIONS === 'true' && repositoryName
@@ -38,6 +39,11 @@ export default defineConfig({
     footer: {
       message: 'Community maintained',
       copyright: `© ${new Date().getFullYear()} Material You App List`
+    }
+  },
+  markdown: {
+    config: (md) => {
+      emojiToFontAwesomePlugin(md)
     }
   },
   vite: {

@@ -1,3 +1,5 @@
+@import '@fortawesome/fontawesome-svg-core/styles.css';
+
 :root {
   --vp-c-brand-1: #7f67be;
   --vp-c-brand-2: #6f59ad;
@@ -43,7 +45,8 @@
   overflow: hidden;
 }
 
-@media (hover: none), (pointer: coarse) {
+@media (hover: none),
+(pointer: coarse) {
   .VPHome {
     overflow: visible;
   }
@@ -194,7 +197,104 @@
   }
 }
 
-img.emoji {
+.myal-fa-emoji {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  font-style: normal;
+  line-height: 1;
+  vertical-align: -0.1em;
+  text-align: center;
+}
+
+.myal-fa-emoji svg {
+  height: 1em;
+  width: 1em;
+  vertical-align: -0.1em;
+}
+
+.vp-doc h1 .myal-fa-emoji,
+.vp-doc h2 .myal-fa-emoji,
+.vp-doc h3 .myal-fa-emoji,
+.vp-doc h4 .myal-fa-emoji {
+  color: var(--vp-c-brand-1);
+  margin-right: 0.15em;
+}
+
+.vp-doc h1 .myal-fa-emoji svg,
+.vp-doc h2 .myal-fa-emoji svg,
+.vp-doc h3 .myal-fa-emoji svg,
+.vp-doc h4 .myal-fa-emoji svg {
+  fill: var(--vp-c-brand-1);
+}
+
+.VPDocAsideOutline .myal-fa-emoji {
+  width: 1em;
+  margin-right: 0.2em;
+  color: var(--vp-c-text-2);
+}
+
+.VPDocAsideOutline .myal-fa-emoji svg {
+  fill: var(--vp-c-text-2);
+}
+
+.VPDocAsideOutline .outline-link.active .myal-fa-emoji {
+  color: var(--vp-c-brand-1);
+}
+
+.VPDocAsideOutline .outline-link.active .myal-fa-emoji svg {
+  fill: var(--vp-c-brand-1);
+}
+
+sup .myal-fa-emoji {
+  font-size: 0.85em;
+  vertical-align: baseline;
+  width: auto;
+}
+
+sup .myal-fa-emoji svg {
+  height: 0.85em;
+  width: 0.85em;
+}
+
+.VPNavBarMenuLink .myal-fa-emoji,
+.VPNavScreenMenuLink .myal-fa-emoji,
+.VPSidebarItem .myal-fa-emoji,
+.VPNavBarMenuGroup .myal-fa-emoji,
+.VPNavScreenMenuGroup .myal-fa-emoji,
+.VPFlyout .myal-fa-emoji {
+  margin-right: 0.25em;
+}
+
+code .myal-fa-emoji {
+  margin-left: 0.20em;
+  margin-right: 0.25em;
+  vertical-align: middle;
+}
+
+code .myal-fa-emoji svg {
+  vertical-align: middle;
+}
+
+.myal-hero-sparkles {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  vertical-align: -0.12em;
+  margin-left: 0.1em;
+  background-color: currentColor;
+  -webkit-mask-image: url('/icons/bx-sparkles-alt.webp');
+  mask-image: url('/icons/bx-sparkles-alt.webp');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+svg.emoji {
   display: inline-block;
   height: 1.1em;
   width: 1.1em;
